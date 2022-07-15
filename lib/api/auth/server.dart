@@ -14,7 +14,23 @@ class OauthServer {
         continue;
       }
 
-      request.response.write("Success: $code");
+      request.response.headers.contentType = ContentType.html;
+      request.response.write("""
+          <!doctype html>
+          <html lang="en">
+          <head>
+            <meta charset="utf-8">
+            <title>Success</title>
+          </head>
+          <body>
+            <div>$code</div>
+            <script type="text/javascript">
+              window.open("","_parent","");
+              setTimeout(window.close, 2000);
+            </script>
+          </body>
+          </html>
+          """);
       await request.response.close();
       break;
     }

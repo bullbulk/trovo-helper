@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:trovo_helper/api/bot/bot.dart';
 import 'package:trovo_helper/api/utils/models.dart';
+import 'package:trovo_helper/elements/alert_box.dart';
 
 class BotController extends GetxController {
   final Bot bot = Bot();
@@ -76,42 +76,18 @@ class GlobalController extends GetxController {
     update();
   }
 
-  showDialog(String text) {
-    Get.defaultDialog(
-      title: "Authentication required",
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Text("Go to the following link:"),
-          const SizedBox(height: 12),
-          SizedBox(
-            width: 400,
-            child: SelectableText(text),
-          ),
-          const SizedBox(height: 12),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ElevatedButton(
-                child: const Text("Copy"),
-                onPressed: () {
-                  Clipboard.setData(ClipboardData(text: text));
-                },
-              ),
-              ElevatedButton(
-                child: const Text("Close"),
-                onPressed: () {
-                  var context = Get.overlayContext;
-                  if (context != null) {
-                    Navigator.of(context).pop();
-                  }
-                },
-              )
-            ],
-          )
-        ],
-      ),
-    );
+  Future<void> dismissOverlay() async {
+    var context = Get.overlayContext;
+    if (context != null) {
+      Navigator.of(context).pop();
+    }
+  }
+
+  Future<void> showUriDialog(Uri uri) async {
+    return await Get.defaultDialog(
+        title: "Authentication required",
+        barrierDismissible: false,
+        content: UriAlertBox(uri, dismissOverlay));
   }
 }
 

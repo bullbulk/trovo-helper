@@ -86,7 +86,12 @@ class NavDrawer extends StatelessWidget {
               color: Theme.of(context).iconTheme.color,
             ),
             onTap: () {
-              Get.to(chatScreen);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => chatScreen,
+                )
+              );
             },
           ),
           const Divider(

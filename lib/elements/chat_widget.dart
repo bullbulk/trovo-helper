@@ -19,7 +19,7 @@ class ChatWidget extends StatefulWidget {
 }
 
 class _ChatWidgetState extends State<ChatWidget> {
-  final _scrollController = ScrollController();
+  late ScrollController _scrollController;
   double _lastScrollPosition = .0;
 
   void scrollDown() {
@@ -31,16 +31,7 @@ class _ChatWidgetState extends State<ChatWidget> {
     _lastScrollPosition = position;
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    _scrollController.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
+  void _setupScrollController() {
     // Increase scroll speed
     _scrollController.addListener(() {
       ScrollDirection scrollDirection =
@@ -57,12 +48,18 @@ class _ChatWidgetState extends State<ChatWidget> {
     });
 
     // Scroll down if current position is on the last element
-    Get.find<MessagesController>().addListener(() => scrollDown());
-    Get.find<MessagesController>().addListener(() => setState((){}));
+    Get.find<MessagesController>()
+      ..addListener(() => scrollDown())
+      ..removeListener(() => scrollDown());
   }
 
   @override
   Widget build(BuildContext context) {
+    // Scroll controller detaches with every Navigator.pop(),
+    // so we need to create a new one every Navigator.push()
+    _scrollController = ScrollController();
+    _setupScrollController();
+
     return GetBuilder<BotController>(
       builder: (controller) => ListView.builder(
         controller: _scrollController,
