@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trovo_helper/api/utils/options.dart';
 import 'package:trovo_helper/const.dart';
 import 'package:trovo_helper/elements/drawer.dart';
 import 'package:trovo_helper/utils/storage.dart';
@@ -23,9 +24,11 @@ class SettingsScreen extends StatelessWidget {
     await _config.write(targetChannelNameKey, targetChannelNameController.text);
     await _config.write(roleManaAmountKey, roleManaAmountController.text);
     await _config.write(roleNameKey, roleNameController.text);
+
+    CustomOptions.refresh();
   }
 
-  void init() {
+  void readValues() {
     _config.read(targetChannelNameKey).then((value) {
       targetChannelNameController.text = value ?? "";
     });
@@ -42,7 +45,7 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    init();
+    readValues();
 
     return Scaffold(
         appBar: AppBar(

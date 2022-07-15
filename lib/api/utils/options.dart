@@ -29,6 +29,10 @@ class CustomOptions extends BaseOptions {
   }
 
   static Future<void> init() async {
+    await refresh();
+  }
+
+  static Future<void> refresh() async {
     clientId = await UserData().clientId;
   }
 
