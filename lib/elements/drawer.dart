@@ -87,11 +87,10 @@ class NavDrawer extends StatelessWidget {
             ),
             onTap: () {
               Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => chatScreen,
-                )
-              );
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => chatScreen,
+                  ));
             },
           ),
           const Divider(

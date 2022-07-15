@@ -12,7 +12,7 @@ import 'package:trovo_helper/utils/storage.dart';
 
 class AuthController {
   static final CustomOptions _clientOptions =
-  CustomOptions(baseUrl: "https://open-api.trovo.live/openplatform");
+      CustomOptions(baseUrl: "https://open-api.trovo.live/openplatform");
   static final Dio _client = Dio(_clientOptions);
 
   final UserData _userData = UserData();
@@ -24,10 +24,8 @@ class AuthController {
   onErrorMiddleware(DioError e, ErrorInterceptorHandler handler) {
     dog.e("""
           SENT ${e.response?.requestOptions.uri}\n
-          Data: ${const JsonEncoder.withIndent('  ').convert(
-        e.response?.requestOptions.data)}\n
-          Headers: ${const JsonEncoder.withIndent('  ').convert(
-        e.response?.requestOptions.headers)}\n
+          Data: ${const JsonEncoder.withIndent('  ').convert(e.response?.requestOptions.data)}\n
+          Headers: ${const JsonEncoder.withIndent('  ').convert(e.response?.requestOptions.headers)}\n
           RECEIVED ${e.response?.data}
           """);
     return handler.next(e);
