@@ -1,11 +1,11 @@
 name: trovo_helper
-description: Desktop Trovo util application.
+description: Trovo util application.
 
 repository: https://github.com/bullbulk/trovo_helper
 
 publish_to: 'none'
 
-version: 1.0.0
+version: 0.1.2
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
@@ -20,14 +20,15 @@ dependencies:
   
   dio: ^4.0.6
   event_bus: ^2.0.0
+  cached_network_image: ^3.2.1
   dog: ^1.4.0
   flutter_secure_storage: ^5.0.2
   get: ^4.6.5
-  localstorage: ^4.0.0  
+  jovial_svg: ^1.1.5
+  localstorage: ^4.0.0
   path_provider: ^2.0.9
   random_string_generator: ^2.0.0
   retry: ^3.1.0
-  cached_network_image: ^3.2.1
   url_launcher: ^6.1.5
 
 dev_dependencies:
@@ -38,3 +39,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/images/medals/

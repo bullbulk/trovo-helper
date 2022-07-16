@@ -49,8 +49,8 @@ class _ChatWidgetState extends State<ChatWidget> {
 
     // Scroll down if current position is on the last element
     Get.find<MessagesController>()
-      ..addListener(() => scrollDown())
-      ..removeListener(() => scrollDown());
+      ..removeListener(() => scrollDown())
+      ..addListener(() => scrollDown());
   }
 
   @override

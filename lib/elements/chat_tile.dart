@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trovo_helper/api/utils/models.dart';
+import 'package:trovo_helper/utils/medals.dart';
 
-import '../const.dart';
 import '../utils/getx.dart';
 
 class ChatTile extends StatefulWidget {
@@ -19,7 +19,7 @@ class ChatTileState extends State<ChatTile>
     with SingleTickerProviderStateMixin {
   ChatTileState({Key? key});
 
-  var medals = [];
+  var medalsRow = [];
 
   late ChatMessage chatItem;
 
@@ -35,13 +35,14 @@ class ChatTileState extends State<ChatTile>
 
     if (chatItem.medals != null) {
       for (String i in chatItem.medals as List) {
-        if (i.startsWith("sub_")) {
-          medals.add(const Icon(Icons.star, color: Colors.amber));
-        }
-
-        var medal = commonMedals[i];
+        var medal = medalsWidgets[i];
         if (medal != null) {
-          medals.add(medal);
+          medalsRow.add(SizedBox(
+            width: 20,
+            height: 20,
+            child: medal,
+          ));
+          medalsRow.add(const SizedBox(width: 4));
         }
       }
     }
@@ -49,7 +50,7 @@ class ChatTileState extends State<ChatTile>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 8,
         horizontal: 16,
@@ -75,8 +76,8 @@ class ChatTileState extends State<ChatTile>
           // const SizedBox(
           //   width: 12,
           // ),
-          ...medals,
-          if (medals != []) const SizedBox(width: 6),
+          ...medalsRow,
+          if (medalsRow != []) const SizedBox(width: 4),
           SelectableText(
             chatItem.nickname,
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),

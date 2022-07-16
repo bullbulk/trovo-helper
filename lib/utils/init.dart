@@ -6,12 +6,14 @@ import 'package:path_provider/path_provider.dart';
 import 'package:trovo_helper/api/utils/options.dart';
 import 'package:trovo_helper/const.dart';
 import 'package:trovo_helper/utils/getx.dart';
+import 'package:trovo_helper/utils/medals.dart';
 import 'package:trovo_helper/utils/storage.dart';
 
 Future<void> init() async {
   await CustomOptions.init();
   await Config.init();
   await initLogger();
+  await loadMedalsWidgets();
 
   if (!Get.isRegistered<BotController>()) {
     Get.put(MessagesController());
