@@ -22,7 +22,9 @@ class _ChatWidgetState extends State<ChatWidget> {
   late ScrollController _scrollController;
   double _lastScrollPosition = .0;
 
-  void scrollDown() {
+  void scrollToEnd() {
+    if (!_scrollController.hasClients) return;
+
     final position = _scrollController.position.maxScrollExtent;
 
     if (_scrollController.position.pixels == _lastScrollPosition) {
@@ -32,25 +34,25 @@ class _ChatWidgetState extends State<ChatWidget> {
   }
 
   void _setupScrollController() {
-    // Increase scroll speed
-    _scrollController.addListener(() {
-      ScrollDirection scrollDirection =
-          _scrollController.position.userScrollDirection;
-      if (scrollDirection != ScrollDirection.idle) {
-        double scrollEnd = _scrollController.offset +
-            (scrollDirection == ScrollDirection.reverse
-                ? extraScrollSpeed
-                : -extraScrollSpeed);
-        scrollEnd = min(_scrollController.position.maxScrollExtent,
-            max(_scrollController.position.minScrollExtent, scrollEnd));
-        _scrollController.jumpTo(scrollEnd);
-      }
-    });
+    // Increase scroll speed on mouse
+    if (GetPlatform.isDesktop) {
+      _scrollController.addListener(() {
+        ScrollDirection scrollDirection =
+            _scrollController.position.userScrollDirection;
+        if (scrollDirection != ScrollDirection.idle) {
+          double scrollEnd = _scrollController.offset +
+              (scrollDirection == ScrollDirection.reverse
+                  ? extraScrollSpeed
+                  : -extraScrollSpeed);
+          scrollEnd = min(_scrollController.position.maxScrollExtent,
+              max(_scrollController.position.minScrollExtent, scrollEnd));
+          _scrollController.jumpTo(scrollEnd);
+        }
+      });
+    }
 
     // Scroll down if current position is on the last element
-    Get.find<MessagesController>()
-      ..removeListener(() => scrollDown())
-      ..addListener(() => scrollDown());
+    Get.find<MessagesController>().addListener(() => scrollToEnd());
   }
 
   @override
@@ -65,9 +67,9 @@ class _ChatWidgetState extends State<ChatWidget> {
         controller: _scrollController,
         itemCount: controller.chatMessages.length,
         itemBuilder: (BuildContext context, int index) {
-          final chatItem = controller.chatMessages[index];
-          return ChatTile(
-            chatItem: chatItem,
+          final messageItem = controller.chatMessages[index];
+          return MessageTile(
+            messageItem: messageItem,
           );
         },
       ),

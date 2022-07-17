@@ -6,35 +6,21 @@ import 'package:trovo_helper/utils/medals.dart';
 
 import '../utils/getx.dart';
 
-class ChatTile extends StatefulWidget {
-  final ChatMessage chatItem;
+class MessageTile extends StatelessWidget {
+  final ChatMessage messageItem;
 
-  const ChatTile({Key? key, required this.chatItem}) : super(key: key);
-
-  @override
-  State<ChatTile> createState() => ChatTileState();
-}
-
-class ChatTileState extends State<ChatTile>
-    with SingleTickerProviderStateMixin {
-  ChatTileState({Key? key});
+  MessageTile({Key? key, required this.messageItem}) : super(key: key);
 
   var medalsRow = [];
 
-  late ChatMessage chatItem;
-
   @override
-  void initState() {
-    super.initState();
-
-    chatItem = widget.chatItem;
-
+  Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => Get.find<MessagesController>().newMessage(),
-    ); // Call after build
+    );
 
-    if (chatItem.medals != null) {
-      for (String i in chatItem.medals as List) {
+    if (messageItem.medals != null) {
+      for (String i in messageItem.medals as List) {
         var medal = medalsWidgets[i];
         if (medal != null) {
           medalsRow.add(SizedBox(
@@ -46,10 +32,6 @@ class ChatTileState extends State<ChatTile>
         }
       }
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 8,
@@ -79,7 +61,7 @@ class ChatTileState extends State<ChatTile>
           ...medalsRow,
           if (medalsRow != []) const SizedBox(width: 4),
           SelectableText(
-            chatItem.nickname,
+            messageItem.nickname,
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           const SizedBox(
@@ -87,7 +69,7 @@ class ChatTileState extends State<ChatTile>
           ),
           Flexible(
             child: SelectableText(
-              chatItem.content,
+              messageItem.content,
               style: const TextStyle(fontSize: 16),
             ),
           )
