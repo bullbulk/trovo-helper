@@ -15,7 +15,10 @@ Future<void> loadMedalsWidgets() async {
         !assetKey.endsWith(".svg")) continue;
 
     var si = await ScalableImage.fromSvgAsset(rootBundle, assetKey);
-    medalsWidgets[assetKey.split("/").last.split(".")[0]] =
-        ScalableImageWidget(si: si);
+    var name = assetKey.split("/").last.split(".")[0];
+    medalsWidgets[name] = Tooltip(
+      message: name,
+      child: ScalableImageWidget(si: si),
+    );
   }
 }
