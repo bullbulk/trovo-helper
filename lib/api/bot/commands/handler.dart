@@ -6,7 +6,7 @@ class CommandsHandler {
 
   String prefix = "!";
 
-  late Map<String, Function(ChatMessage)> commands;
+  late Map<String, Function(MessageItem)> commands;
 
   CommandsHandler(this.bot) {
     commands = {
@@ -14,21 +14,22 @@ class CommandsHandler {
     };
   }
 
-  void handle(ChatMessage message) {
-    if (!message.content.startsWith(prefix)) {
+  void handle(MessageItem message) {
+    var content = message.content.trim();
+    if (!content.startsWith(prefix)) {
       return;
     }
 
-    var content = message.content.substring(1, message.content.length);
-    var splitted = content.split(" ");
+    var pureContent = content.substring(prefix.length, message.content.length);
+    var contentParts = pureContent.split(" ");
 
-    var command = commands[splitted[0]];
+    var command = commands[contentParts[0]];
     if (command != null) {
       command(message);
     }
   }
 
-  void echo(ChatMessage message) {
+  void echo(MessageItem message) {
     var content = message.content.split(" ");
     var arguments = content.sublist(1, content.length);
     bot.api.send(arguments.toString());

@@ -20,11 +20,11 @@ class Bot extends BotBackend {
     commands = CommandsHandler(this);
   }
 
-  Future<void> onData(ChatMessage data) async {
+  Future<void> onData(MessageItem data) async {
     handleMessage(data);
   }
 
-  Future<void> handleMessage(ChatMessage message) async {
+  Future<void> handleMessage(MessageItem message) async {
     if (message.senderId == selfId) return;
 
     // Mana
@@ -42,7 +42,7 @@ class Bot extends BotBackend {
     }
   }
 
-  Future<void> handleMana(ChatMessage message, int value, int num) async {
+  Future<void> handleMana(MessageItem message, int value, int num) async {
     var roleManaAmount = int.parse(await Config().read(roleManaAmountKey));
 
     if (value * num >= roleManaAmount) {

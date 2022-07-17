@@ -1,24 +1,4 @@
-const models = {
-  0: NormalMessage,
-  5: SpellMessage,
-  6: MagicSuperCapMessage,
-  7: MagicColorfulMessage,
-  8: MagicSpellMessage,
-  9: MagicBulletMessage,
-  5001: SubscriptionMessage,
-  5002: SystemMessage,
-  5003: FollowMessage,
-  5004: WelcomeMessage,
-  5005: RandomGiftSubMessage,
-  5006: TargetedGiftSubMessage,
-  5007: ActivityMessage,
-  5008: WelcomeRaidMessage,
-  5009: CustomSpellMessage,
-  5012: StreamStatusMessage,
-  5013: UnfollowMessage,
-};
-
-class ChatMessage {
+class MessageItem {
   int type;
   String content;
   String nickname;
@@ -36,7 +16,7 @@ class ChatMessage {
   Map? contentData;
   List<String>? customRoles;
 
-  ChatMessage(
+  MessageItem(
     this.type,
     this.content,
     this.nickname,
@@ -55,8 +35,8 @@ class ChatMessage {
     this.customRoles,
   );
 
-  factory ChatMessage.fromMap(Map data) {
-    return ChatMessage(
+  factory MessageItem.fromMap(Map data) {
+    return MessageItem(
       data["type"],
       data["content"],
       data["nick_name"],
@@ -76,37 +56,3 @@ class ChatMessage {
     );
   }
 }
-
-class NormalMessage {}
-
-class SpellMessage {}
-
-class MagicSuperCapMessage {}
-
-class MagicColorfulMessage {}
-
-class MagicSpellMessage {}
-
-class MagicBulletMessage {}
-
-class SubscriptionMessage {}
-
-class SystemMessage {}
-
-class FollowMessage {}
-
-class WelcomeMessage {}
-
-class RandomGiftSubMessage {}
-
-class TargetedGiftSubMessage {}
-
-class ActivityMessage {}
-
-class WelcomeRaidMessage {}
-
-class CustomSpellMessage {}
-
-class StreamStatusMessage {}
-
-class UnfollowMessage {}

@@ -8,7 +8,7 @@ import 'package:trovo_helper/elements/alert_box.dart';
 
 class BotController extends GetxController {
   final Bot bot = Bot();
-  final chatMessages = <ChatMessage>[].obs;
+  final chatMessages = <MessageItem>[].obs;
   final List<StreamSubscription> _streamSubs = [];
 
   bool running = false;
@@ -34,7 +34,7 @@ class BotController extends GetxController {
     }
   }
 
-  Future<void> onData(ChatMessage value) async {
+  Future<void> onData(MessageItem value) async {
     chatMessages.add(value);
     update();
   }
@@ -53,7 +53,7 @@ class BotController extends GetxController {
   }
 
   Future<StreamSubscription?> subscribe(
-      Function(ChatMessage data) onData) async {
+      Function(MessageItem data) onData) async {
     if (!ready) return null;
 
     var sub = await bot.subscribe(onData);

@@ -2,22 +2,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trovo_helper/api/utils/models.dart';
+import 'package:trovo_helper/elements/message_content.dart';
 import 'package:trovo_helper/utils/medals.dart';
+import 'package:trovo_helper/utils/getx.dart';
 
-import '../utils/getx.dart';
 
 class MessageTile extends StatelessWidget {
-  final ChatMessage messageItem;
+  final MessageItem messageItem;
 
-  MessageTile({Key? key, required this.messageItem}) : super(key: key);
-
-  var medalsRow = [];
+  const MessageTile({Key? key, required this.messageItem}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) => Get.find<MessagesController>().newMessage(),
+          (_) => Get.find<MessagesController>().newMessage(),
     );
+
+    var medalsRow = [];
 
     if (messageItem.medals != null) {
       for (String i in messageItem.medals as List) {
@@ -32,6 +33,7 @@ class MessageTile extends StatelessWidget {
         }
       }
     }
+
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 8,
@@ -68,10 +70,7 @@ class MessageTile extends StatelessWidget {
             width: 12,
           ),
           Flexible(
-            child: SelectableText(
-              messageItem.content,
-              style: const TextStyle(fontSize: 16),
-            ),
+            child: getMessageContentWidget(messageItem),
           )
         ],
       ),

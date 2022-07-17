@@ -60,8 +60,8 @@ class BotBackend {
   }
 
   Future<StreamSubscription> subscribe(
-      Function(ChatMessage data) onData) async {
-    var sub = _chat!.subscribe((data) => onData(ChatMessage.fromMap(data)));
+      Function(MessageItem data) onData) async {
+    var sub = _chat!.subscribe((data) => onData(MessageItem.fromMap(data)));
     return sub;
   }
 

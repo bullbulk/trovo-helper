@@ -3,11 +3,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'package:trovo_helper/elements/chat_tile.dart';
+import 'package:trovo_helper/elements/message_tile.dart';
 import 'package:trovo_helper/utils/getx.dart';
 
 import '../utils/getx.dart';
-import 'chat_tile.dart';
+import 'message_tile.dart';
 
 const extraScrollSpeed = 80;
 
