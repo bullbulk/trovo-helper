@@ -1,9 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trovo_helper/api/utils/models.dart';
 import 'package:trovo_helper/elements/message_content.dart';
-import 'package:trovo_helper/utils/medals.dart';
+import 'package:trovo_helper/utils/images.dart';
 import 'package:trovo_helper/utils/getx.dart';
 
 class MessageTile extends StatelessWidget {

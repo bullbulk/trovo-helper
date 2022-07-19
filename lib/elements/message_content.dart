@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:trovo_helper/api/utils/models.dart';
+import 'package:trovo_helper/utils/images.dart';
 
 const messageContentConstructors = {
   0: NormalMessage.new,
@@ -54,12 +55,25 @@ class SpellMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     var content = jsonDecode(messageItem.content);
 
+    var valueType = content["value_type"] as String;
+    var valueIcon = imagesWidgets[valueType.toLowerCase()];
+
     return Row(
       children: [
         SelectableText(
-          "Casted ${content["gift"]} ${content["gift_value"]} x${content["num"]}",
+          "Casted ${content["gift"]}",
           style: const TextStyle(fontSize: 16),
         ),
+        if (valueIcon != null)
+          SizedBox(
+            width: 24,
+            height: 24,
+            child: valueIcon,
+          ),
+        SelectableText(
+          "${content["gift_value"]} x${content["num"]}",
+          style: const TextStyle(fontSize: 16),
+        )
       ],
     );
   }
@@ -240,9 +254,28 @@ class CustomSpellMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SelectableText(
-      messageItem.content,
-      style: const TextStyle(fontSize: 16),
+    var content = jsonDecode(messageItem.content);
+
+    var valueType = content["value_type"] as String;
+    var valueIcon = imagesWidgets[valueType.toLowerCase()];
+
+    return Row(
+      children: [
+        SelectableText(
+          "Casted ${content["gift"]}",
+          style: const TextStyle(fontSize: 16),
+        ),
+        if (valueIcon != null)
+          SizedBox(
+            width: 16,
+            height: 16,
+            child: valueIcon,
+          ),
+        SelectableText(
+          "${content["gift_value"]} x${content["num"]}",
+          style: const TextStyle(fontSize: 16),
+        )
+      ],
     );
   }
 }
