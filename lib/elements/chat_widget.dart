@@ -1,3 +1,5 @@
+// TODO: Refactor this when GetBuilder's dispose issue will be fixed.
+
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -5,9 +7,6 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:trovo_helper/elements/message_tile.dart';
 import 'package:trovo_helper/utils/getx.dart';
-
-import '../utils/getx.dart';
-import 'message_tile.dart';
 
 const extraScrollSpeed = 80;
 
@@ -20,7 +19,47 @@ class ChatWidget extends StatefulWidget {
 
 class _ChatWidgetState extends State<ChatWidget> {
   late ScrollController _scrollController;
+  late BotController _controller;
+
   double _lastScrollPosition = .0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _scrollController = ScrollController();
+    _setupScrollController();
+
+    _controller = Get.find<BotController>();
+    _controller.addListenerId("chatWidgetUpdate", update);
+  }
+
+  void update() {
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.disposeId("chatWidgetUpdate");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Scroll controller detaches with every Navigator.pop(),
+    // so we need to create a new one every Navigator.push()
+
+    return ListView.builder(
+      controller: _scrollController,
+      itemCount: _controller.chatMessages.length,
+      itemBuilder: (BuildContext context, int index) {
+        final messageItem = _controller.chatMessages[index];
+        return MessageTile(
+          messageItem: messageItem,
+        );
+      },
+    );
+  }
 
   void scrollToEnd() {
     if (!_scrollController.hasClients) return;
@@ -53,26 +92,5 @@ class _ChatWidgetState extends State<ChatWidget> {
 
     // Scroll down if current position is on the last element
     Get.find<MessagesController>().addListener(() => scrollToEnd());
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // Scroll controller detaches with every Navigator.pop(),
-    // so we need to create a new one every Navigator.push()
-    _scrollController = ScrollController();
-    _setupScrollController();
-
-    return GetBuilder<BotController>(
-      builder: (controller) => ListView.builder(
-        controller: _scrollController,
-        itemCount: controller.chatMessages.length,
-        itemBuilder: (BuildContext context, int index) {
-          final messageItem = controller.chatMessages[index];
-          return MessageTile(
-            messageItem: messageItem,
-          );
-        },
-      ),
-    );
   }
 }

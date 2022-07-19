@@ -36,7 +36,13 @@ class BotController extends GetxController {
 
   Future<void> onData(MessageItem value) async {
     chatMessages.add(value);
+    // TODO: Create setting with messages limit
+    if (chatMessages.length > 300) {
+      chatMessages.removeAt(0);
+    }
+
     update();
+    update(["chatWidgetUpdate"]);
   }
 
   Future<void> stopBot() async {

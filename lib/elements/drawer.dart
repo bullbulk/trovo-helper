@@ -10,8 +10,6 @@ import 'package:trovo_helper/utils/getx.dart';
 class NavDrawer extends StatelessWidget {
   const NavDrawer({Key? key}) : super(key: key);
 
-  final chatScreen = const ChatScreen();
-
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -72,7 +70,8 @@ class NavDrawer extends StatelessWidget {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (BuildContext context) => const MyHomePage()),
+                  builder: (BuildContext context) => const MyHomePage(),
+                ),
               );
             },
           ),
@@ -87,10 +86,11 @@ class NavDrawer extends StatelessWidget {
             ),
             onTap: () {
               Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => chatScreen,
-                  ));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ChatScreen(),
+                ),
+              );
             },
           ),
           const Divider(
@@ -104,8 +104,11 @@ class NavDrawer extends StatelessWidget {
             ),
             onTap: () {
               Navigator.of(context).pop();
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => const BotScreen()));
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) => const BotScreen(),
+                ),
+              );
             },
           ),
           const Divider(
@@ -119,8 +122,11 @@ class NavDrawer extends StatelessWidget {
             ),
             onTap: () {
               Navigator.of(context).pop();
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => SettingsScreen()));
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) => SettingsScreen(),
+                ),
+              );
             },
           )
         ],

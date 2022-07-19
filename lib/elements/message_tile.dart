@@ -1,11 +1,10 @@
-// import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trovo_helper/api/utils/models.dart';
 import 'package:trovo_helper/elements/message_content.dart';
 import 'package:trovo_helper/utils/medals.dart';
 import 'package:trovo_helper/utils/getx.dart';
-
 
 class MessageTile extends StatelessWidget {
   final MessageItem messageItem;
@@ -15,7 +14,7 @@ class MessageTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback(
-          (_) => Get.find<MessagesController>().newMessage(),
+      (_) => Get.find<MessagesController>().newMessage(),
     );
 
     var medalsRow = [];
@@ -42,23 +41,25 @@ class MessageTile extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // if (chatItem["avatar"] != null)
+          // Memory consumption is too high
+          //
+          // if (messageItem.avatar != null)
           //   CachedNetworkImage(
-          //     imageUrl: "${chatItem["avatar"]}",
+          //     imageUrl: "${messageItem.avatar}",
           //     imageBuilder: (context, imageProvider) => CircleAvatar(
           //       backgroundImage: imageProvider,
           //       radius: 16,
           //     ),
           //     placeholder: (context, url) => const CircularProgressIndicator(),
-          //     width: 32,
-          //     height: 32,
-          //     memCacheWidth: 16,
-          //     memCacheHeight: 16,
-          //     maxWidthDiskCache: 16,
-          //     maxHeightDiskCache: 16,
+          //     width: 24,
+          //     height: 24,
+          //     memCacheWidth: 24,
+          //     memCacheHeight: 24,
+          //     maxWidthDiskCache: 24,
+          //     maxHeightDiskCache: 24,
           //   ),
           // const SizedBox(
-          //   width: 12,
+          //   width: 8,
           // ),
           ...medalsRow,
           if (medalsRow != []) const SizedBox(width: 4),
