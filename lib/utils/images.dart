@@ -46,5 +46,4 @@ Future<void> loadImageWidgets() async {
     var name = assetKey.split("/").last.split(".")[0];
     imagesWidgets[name] = ScalableImageWidget(si: si);
   }
-  print(imagesWidgets);
 }

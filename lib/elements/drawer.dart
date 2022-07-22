@@ -24,23 +24,34 @@ class NavDrawer extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: GetBuilder<GlobalController>(builder: (controller) {
-                      if (controller.avatar == null) {
-                        return Icon(
-                          Icons.account_circle,
-                          color: Theme.of(context).colorScheme.primary,
-                          size: 40,
-                        );
-                      } else {
-                        return CachedNetworkImage(
-                          imageUrl: controller.avatar.toString(),
-                          fit: BoxFit.fitHeight,
-                          width: 48,
-                          height: 48,
-                        );
-                      }
-                    }),
-                    flex: 2,
+                    flex: 3,
+                    child: GetBuilder<GlobalController>(
+                      builder: (controller) {
+                        if (controller.avatar == null) {
+                          return Icon(
+                            Icons.account_circle,
+                            color: Theme.of(context).colorScheme.primary,
+                            size: 40,
+                          );
+                        } else {
+                          return CachedNetworkImage(
+                            imageBuilder: (context, image) {
+                              return CircleAvatar(
+                                child: ClipOval(
+                                  child: Image(
+                                    image: image,
+                                  ),
+                                ),
+                              );
+                            },
+                            imageUrl: controller.avatar.toString(),
+                            fit: BoxFit.fitHeight,
+                            width: 48,
+                            height: 48,
+                          );
+                        }
+                      },
+                    ),
                   ),
                   Expanded(
                     flex: 6,
@@ -103,8 +114,8 @@ class NavDrawer extends StatelessWidget {
               color: Theme.of(context).iconTheme.color,
             ),
             onTap: () {
-              Navigator.of(context).pop();
-              Navigator.of(context).push(
+              Navigator.pushReplacement(
+                context,
                 MaterialPageRoute(
                   builder: (BuildContext context) => const BotScreen(),
                 ),
@@ -121,14 +132,14 @@ class NavDrawer extends StatelessWidget {
               color: Theme.of(context).iconTheme.color,
             ),
             onTap: () {
-              Navigator.of(context).pop();
-              Navigator.of(context).push(
+              Navigator.pushReplacement(
+                context,
                 MaterialPageRoute(
                   builder: (BuildContext context) => SettingsScreen(),
                 ),
               );
             },
-          )
+          ),
         ],
       ),
     );

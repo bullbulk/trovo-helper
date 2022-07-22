@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:trovo_helper/api/utils/options.dart';
 import 'package:trovo_helper/const.dart';
 import 'package:trovo_helper/elements/drawer.dart';
+import 'package:trovo_helper/elements/obscured_field.dart';
 import 'package:trovo_helper/utils/storage.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -53,50 +54,57 @@ class SettingsScreen extends StatelessWidget {
         ),
         drawer: const NavDrawer(),
         body: Center(
-          child: ListView(
-            children: <Widget>[
-              TextField(
-                controller: targetChannelNameController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Target channel name',
-                ),
+          child: SizedBox(
+            width: 600,
+            child: Center(
+              child: ListView(
+                children: <Widget>[
+                  TextField(
+                    controller: targetChannelNameController,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Target channel name',
+                    ),
+                  ),
+                  ObscuredTextField(
+                    controller: clientIdController,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Client ID',
+                    ),
+                  ),
+                  ObscuredTextField(
+                    controller: clientSecretController,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Client secret',
+                    ),
+                  ),
+                  TextField(
+                    keyboardType: TextInputType.number,
+                    controller: roleManaAmountController,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Mana role starting amount',
+                    ),
+                  ),
+                  TextField(
+                    controller: roleNameController,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Mana role name',
+                    ),
+                  ),
+                  ElevatedButton(
+                      onPressed: () async {
+                        await saveSettings();
+                      },
+                      child: const Text("Save"))
+                ],
               ),
-              TextField(
-                controller: clientIdController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Client ID',
-                ),
-              ),
-              TextField(
-                controller: clientSecretController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Client secret',
-                ),
-              ),
-              TextField(
-                controller: roleManaAmountController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Mana role starting amount',
-                ),
-              ),
-              TextField(
-                controller: roleNameController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Mana role name',
-                ),
-              ),
-              ElevatedButton(
-                  onPressed: () async {
-                    await saveSettings();
-                  },
-                  child: const Text("Save"))
-            ],
+            ),
           ),
-        ));
+        ),
+    );
   }
 }

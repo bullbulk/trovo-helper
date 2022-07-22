@@ -60,7 +60,7 @@ class ChatStream {
     socket.add(jsonEncode({
       "type": "AUTH",
       "nonce": nonce,
-      "data": {"token": token}
+      "data": {"token": token},
     }));
   }
 
